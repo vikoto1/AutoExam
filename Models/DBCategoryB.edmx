@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CategoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="answer_id" />
+          </Key>
+          <Property Name="answer_id" Type="int" Nullable="false" />
+          <Property Name="answer_a" Type="ntext" />
+          <Property Name="answer_b" Type="ntext" />
+          <Property Name="answer_c" Type="ntext" />
+          <Property Name="answer_d" Type="ntext" />
+          <Property Name="true_ans_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="question_id" />
+          </Key>
+          <Property Name="question_id" Type="int" Nullable="false" />
+          <Property Name="question" Type="ntext" />
+          <Property Name="question_img" Type="ntext" />
+          <Property Name="answer_id" Type="int" />
+          <Property Name="true_ans_id" Type="int" />
+        </EntityType>
+        <EntityType Name="TrueAnswer">
+          <Key>
+            <PropertyRef Name="true_ans_id" />
+          </Key>
+          <Property Name="true_ans_id" Type="int" Nullable="false" />
+          <Property Name="true_ans_a" Type="ntext" />
+          <Property Name="true_ans_b" Type="ntext" />
+          <Property Name="true_ans_c" Type="ntext" />
+          <Property Name="true_ans_d" Type="ntext" />
+        </EntityType>
+        <Association Name="FK_answer_id">
+          <End Role="Answer" Type="Self.Answer" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="answer_id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="answer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_true_ans_id">
+          <End Role="TrueAnswer" Type="Self.TrueAnswer" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrueAnswer">
+              <PropertyRef Name="true_ans_id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="true_ans_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_true_ans_id">
+          <End Role="TrueAnswer" Type="Self.TrueAnswer" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrueAnswer">
+              <PropertyRef Name="true_ans_id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="true_ans_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CategoryDBModelStoreContainer">
+          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrueAnswer" EntityType="Self.TrueAnswer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_answer_id" Association="Self.FK_answer_id">
+            <End Role="Answer" EntitySet="Answer" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_true_ans_id" Association="Self.FK_Question_true_ans_id">
+            <End Role="TrueAnswer" EntitySet="TrueAnswer" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_true_ans_id" Association="Self.FK_true_ans_id">
+            <End Role="TrueAnswer" EntitySet="TrueAnswer" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CategoryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="answer_id" />
+          </Key>
+          <Property Name="answer_id" Type="Int32" Nullable="false" />
+          <Property Name="answer_a" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="answer_b" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="answer_c" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="answer_d" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="true_ans_id" Type="Int32" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_answer_id" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="TrueAnswer" Relationship="Self.FK_true_ans_id" FromRole="Answer" ToRole="TrueAnswer" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="question_id" />
+          </Key>
+          <Property Name="question_id" Type="Int32" Nullable="false" />
+          <Property Name="question1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="question_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="answer_id" Type="Int32" />
+          <Property Name="true_ans_id" Type="Int32" />
+          <NavigationProperty Name="Answer" Relationship="Self.FK_answer_id" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="TrueAnswer" Relationship="Self.FK_Question_true_ans_id" FromRole="Question" ToRole="TrueAnswer" />
+        </EntityType>
+        <EntityType Name="TrueAnswer">
+          <Key>
+            <PropertyRef Name="true_ans_id" />
+          </Key>
+          <Property Name="true_ans_id" Type="Int32" Nullable="false" />
+          <Property Name="true_ans_a" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="true_ans_b" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="true_ans_c" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="true_ans_d" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_true_ans_id" FromRole="TrueAnswer" ToRole="Answer" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Question_true_ans_id" FromRole="TrueAnswer" ToRole="Question" />
+        </EntityType>
+        <Association Name="FK_answer_id">
+          <End Role="Answer" Type="Self.Answer" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="answer_id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="answer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_true_ans_id">
+          <End Role="TrueAnswer" Type="Self.TrueAnswer" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrueAnswer">
+              <PropertyRef Name="true_ans_id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="true_ans_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_true_ans_id">
+          <End Role="TrueAnswer" Type="Self.TrueAnswer" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrueAnswer">
+              <PropertyRef Name="true_ans_id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="true_ans_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBCategoryB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="TrueAnswers" EntityType="Self.TrueAnswer" />
+          <AssociationSet Name="FK_answer_id" Association="Self.FK_answer_id">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_true_ans_id" Association="Self.FK_true_ans_id">
+            <End Role="TrueAnswer" EntitySet="TrueAnswers" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_true_ans_id" Association="Self.FK_Question_true_ans_id">
+            <End Role="TrueAnswer" EntitySet="TrueAnswers" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CategoryDBModelStoreContainer" CdmEntityContainer="DBCategoryB">
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="CategoryDBModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="answer_id" ColumnName="answer_id" />
+                <ScalarProperty Name="answer_a" ColumnName="answer_a" />
+                <ScalarProperty Name="answer_b" ColumnName="answer_b" />
+                <ScalarProperty Name="answer_c" ColumnName="answer_c" />
+                <ScalarProperty Name="answer_d" ColumnName="answer_d" />
+                <ScalarProperty Name="true_ans_id" ColumnName="true_ans_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="CategoryDBModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="question_id" ColumnName="question_id" />
+                <ScalarProperty Name="question1" ColumnName="question" />
+                <ScalarProperty Name="question_img" ColumnName="question_img" />
+                <ScalarProperty Name="answer_id" ColumnName="answer_id" />
+                <ScalarProperty Name="true_ans_id" ColumnName="true_ans_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrueAnswers">
+            <EntityTypeMapping TypeName="CategoryDBModel.TrueAnswer">
+              <MappingFragment StoreEntitySet="TrueAnswer">
+                <ScalarProperty Name="true_ans_id" ColumnName="true_ans_id" />
+                <ScalarProperty Name="true_ans_a" ColumnName="true_ans_a" />
+                <ScalarProperty Name="true_ans_b" ColumnName="true_ans_b" />
+                <ScalarProperty Name="true_ans_c" ColumnName="true_ans_c" />
+                <ScalarProperty Name="true_ans_d" ColumnName="true_ans_d" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

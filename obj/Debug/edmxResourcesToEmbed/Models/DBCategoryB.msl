@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CategoryDBModelStoreContainer" CdmEntityContainer="DBCategoryB">
+    <EntitySetMapping Name="Answers">
+      <EntityTypeMapping TypeName="CategoryDBModel.Answer">
+        <MappingFragment StoreEntitySet="Answer">
+          <ScalarProperty Name="answer_id" ColumnName="answer_id" />
+          <ScalarProperty Name="answer_a" ColumnName="answer_a" />
+          <ScalarProperty Name="answer_b" ColumnName="answer_b" />
+          <ScalarProperty Name="answer_c" ColumnName="answer_c" />
+          <ScalarProperty Name="answer_d" ColumnName="answer_d" />
+          <ScalarProperty Name="true_ans_id" ColumnName="true_ans_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="CategoryDBModel.Question">
+        <MappingFragment StoreEntitySet="Question">
+          <ScalarProperty Name="question_id" ColumnName="question_id" />
+          <ScalarProperty Name="question1" ColumnName="question" />
+          <ScalarProperty Name="question_img" ColumnName="question_img" />
+          <ScalarProperty Name="answer_id" ColumnName="answer_id" />
+          <ScalarProperty Name="true_ans_id" ColumnName="true_ans_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrueAnswers">
+      <EntityTypeMapping TypeName="CategoryDBModel.TrueAnswer">
+        <MappingFragment StoreEntitySet="TrueAnswer">
+          <ScalarProperty Name="true_ans_id" ColumnName="true_ans_id" />
+          <ScalarProperty Name="true_ans_a" ColumnName="true_ans_a" />
+          <ScalarProperty Name="true_ans_b" ColumnName="true_ans_b" />
+          <ScalarProperty Name="true_ans_c" ColumnName="true_ans_c" />
+          <ScalarProperty Name="true_ans_d" ColumnName="true_ans_d" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,270 @@
+﻿
+@{
+    ViewBag.Title = "Load";
+}
+@model List<AutoExam.Models.Question>
+
+<style>
+    body {
+        background-color: #f1efef
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        padding: 30px;
+        padding-bottom: 3px;
+        background: lightblue;
+        text-align: center;
+    }
+
+    .myContent {
+        background: none;
+        position: inherit;
+        box-sizing: border-box;
+        width: 1000px;
+        margin-left: 65px;
+        margin-right: 50px;
+        padding-top: 30px;
+        background-color: rgba(255,255,255,.9);
+        background-size: 100%;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.35);
+    }
+
+    .myQuestions {
+        background: none;
+        position: center;
+        margin-left: 65px;
+        margin-right: 55px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        background-color: rgba(255,255,255,.9);
+        background-size: 100%;
+    }
+
+    .myAnswers {
+        background: none;
+        position: inherit;
+        font-size: large;
+        font-family: Arial;
+        width: 800px;
+        height: 150px;
+        padding: 30px;
+        margin-left: 100px;
+        margin-right: 150px;
+        padding-top: 30px;
+        background-color: rgba(255,255,255,.9);
+        background-size: 100%;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.35);
+    }
+
+    .myDiv {
+        border: 5px black;
+        background-color: white;
+        text-align: center;
+    }
+
+    .block {
+        display: block;
+        width: 100%;
+        border: none;
+        background-color: lightblue;
+        color: black;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+        .block:hover {
+            background-color: #ddd;
+            color: black;
+        }
+</style>
+<script>
+        var start = Date.now(),
+            diff,
+            minutes,
+            seconds;
+        function startTimer(duration) {
+            function timer() {
+
+                diff = duration - (((Date.now() - start) / 1000) | 0);
+
+                minutes = (diff / 60) | 0;
+                seconds = (diff % 60) | 0;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                $("#time").text(minutes + ":" + seconds);
+                $("#timehidden").val(minutes + ":" + seconds);
+                if (diff <= 0) {
+                    start = Date.now() + 1000;
+
+                    if (minutes == 0 && seconds == 0) {
+                window.location.href = '@Url.Action("ExpiryTime", "CategoryB")';
+            }
+                }
+            };
+            timer();
+            setInterval(timer, 1000);
+        }
+
+        window.onload = function () {
+            var fiveMinutes = 2400 * 1;
+                startTimer(fiveMinutes);
+            $("#time").val("start");
+        };
+</script>
+
+
+<body>
+    <header class="header">
+        <h2>Оставащо време: </h2>
+        <h4 id="time"></h4>
+        <input type="hidden" id="timehidden" />
+    </header>
+
+
+    <div class="myDiv">
+        <div class="myContent">
+            @using (Html.BeginForm("LoadData", "CategoryB", FormMethod.Post))
+            {
+                for (var i = 0; i < Model.Count(); i++)
+                {
+
+                    @Html.HiddenFor(m => m[i].question_id)
+
+                    <div class="myQuestions">
+                        @Html.HiddenFor(m => m[i].question1)
+                        <h3>   @Html.DisplayFor(m => m[i].question1)</h3>
+                    </div>
+                    <br />
+                    if (Model[i].question_img == null || Model[i].question_img.IsEmpty())
+                    {
+                    }
+                    else
+                    {
+                        <img src="@Url.Content(Model[i].question_img)" alt="Sample Image" style="height:250px;width:250px;" />
+                        <br />
+                    }
+                    @Html.HiddenFor(m => m[i].Answer.answer_id)
+                    @Html.HiddenFor(m => m[i].true_ans_id)
+                    <br />
+
+
+
+
+                    if (Model[i].Answer.answer_a.Contains("~"))
+                    {
+                        <div class="myAnswers">
+                            @Html.HiddenFor(m => m[i].Answer.answer_a)
+                            @Html.CheckBoxFor(m => m[i].isSelected1)
+                            <img src="@Url.Content(Model[i].Answer.answer_a)" alt="Sample Image" style="height:100px;width:100px;" />
+
+                        </div>
+                        <br />
+                    }
+                    else
+                    {
+                        <div class="myAnswers">
+                            @Html.HiddenFor(m => m[i].Answer.answer_a)
+                            @Html.CheckBoxFor(m => m[i].isSelected1)
+                            @Html.DisplayFor(m => m[i].Answer.answer_a)
+
+                        </div>
+                        <br />
+                    }
+                    <br />
+                    if (Model[i].Answer.answer_b.Contains("~"))
+                    {
+                        <div class="myAnswers">
+                            <p>
+                                @Html.HiddenFor(m => m[i].Answer.answer_b)
+                                @Html.CheckBoxFor(m => m[i].isSelected2)
+                                <img src="@Url.Content(Model[i].Answer.answer_b)" alt="Sample Image" style="height:100px;width:100px;" />
+                            </p>
+                        </div>
+                        <br />
+                    }
+                    else
+                    {
+                        <div class="myAnswers">
+                            <p>
+                                @Html.HiddenFor(m => m[i].Answer.answer_b)
+                                @Html.CheckBoxFor(m => m[i].isSelected2)
+                                @Html.DisplayFor(m => m[i].Answer.answer_b)
+                            </p>
+                        </div>
+                        <br />
+                    }
+                    <br />
+                    if (Model[i].Answer.answer_c == null || Model[i].Answer.answer_c.IsEmpty())
+                    {
+                        <br />
+                    }
+                    else if (Model[i].Answer.answer_c.Contains("~"))
+                    {
+                        <div class="myAnswers">
+                            <p>
+                                @Html.HiddenFor(m => m[i].Answer.answer_c)
+                                @Html.CheckBoxFor(m => m[i].isSelected3)
+                                <img src="@Url.Content(Model[i].Answer.answer_c)" alt="Sample Image" style="height:100px;width:100px;" />
+                            </p>
+                        </div>
+                        <br />
+                    }
+                    else
+                    {
+                        <div class="myAnswers">
+                            <p>
+                                @Html.HiddenFor(m => m[i].Answer.answer_c)
+                                @Html.CheckBoxFor(m => m[i].isSelected3)
+                                @Html.DisplayFor(m => m[i].Answer.answer_c)
+                            </p>
+                        </div>
+                        <br />
+                    }
+                    <br />
+                    if (Model[i].Answer.answer_d == null || Model[i].Answer.answer_d.IsEmpty())
+                    {
+                        <br />
+                    }
+                    else if (Model[i].Answer.answer_d.Contains("~"))
+                    {
+                        <div class="myAnswers">
+                            <p>
+                                @Html.HiddenFor(m => m[i].Answer.answer_d)
+                                @Html.CheckBoxFor(m => m[i].isSelected4)
+                                <img src="@Url.Content(Model[i].Answer.answer_d)" alt="Sample Image" style="height:100px;width:100px;" />
+                            </p>
+                        </div>
+                        <br />
+                    }
+                    else
+                    {
+                        <div class="myAnswers">
+                            <p>
+                                @Html.HiddenFor(m => m[i].Answer.answer_d)
+                                @Html.CheckBoxFor(m => m[i].isSelected4)
+                                @Html.DisplayFor(m => m[i].Answer.answer_d)
+                            </p>
+                        </div>
+                        <br />
+                    }
+                    <br />
+                    @Html.HiddenFor(m => m[i].Answer.TrueAnswer.true_ans_a)
+                    @Html.HiddenFor(m => m[i].Answer.TrueAnswer.true_ans_b)
+                    @Html.HiddenFor(m => m[i].Answer.TrueAnswer.true_ans_c)
+                    @Html.HiddenFor(m => m[i].Answer.TrueAnswer.true_ans_d)
+                }
+                <button class="block" type="submit">Предай</button>
+            }
+        </div>
+    </div>
+</body>

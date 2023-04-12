@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>AutoExam</h1>
+    <p class="lead">AutoExam е онлайн платформа за решаване на листовки </p>
+    <p><a href="@Url.Action("Load", "CategoryB")" class="btn btn-primary btn-lg">Започни теста &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Информация</h2>
+        <p>
+            Информация
+            Информационна система за проверка на резултати от теоретичен изпит. Решаване на листовки онлайн.
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("About", "Home")">Повече информация &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Автошколи</h2>
+        <p>Регистър с всички автошколи имащи право да провеждат курсове</p>
+        <p><a class="btn btn-default" href="https://rta.government.bg/images/Image/rtaoldsite/profcomp/register.html">Повече информация &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Контакти</h2>
+        <p></p>
+        <p><a class="btn btn-default" href="@Url.Action("Contact", "Home")">Повече информация &raquo;</a></p>
+    </div>
+</div>

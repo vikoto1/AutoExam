@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = "LoadData";
+    int count = 0;
+}
+@model List<AutoExam.Models.Question>
+
+<style>
+    .header {
+        position: sticky;
+        top: 0;
+        padding: 40px;
+        background: lightblue;
+        text-align: center;
+    }
+
+    table.greenTable {
+        font-family: Verdana, Geneva, sans-serif;
+        border: 0px solid #000000;
+        background-color: #FFFEFF;
+        width: 100%;
+        text-align: center;
+    }
+
+        table.greenTable td, table.greenTable th {
+            border: 1px solid #000000;
+            padding: 4px 3px;
+        }
+
+        table.greenTable tbody td {
+            font-size: 14px;
+        }
+
+        table.greenTable thead {
+            background: #FFF9EF;
+            background: -moz-linear-gradient(top, #fffaf3 0%, #fff9f0 66%, #FFF9EF 100%);
+            background: -webkit-linear-gradient(top, #fffaf3 0%, #fff9f0 66%, #FFF9EF 100%);
+            background: linear-gradient(to bottom, #fffaf3 0%, #fff9f0 66%, #FFF9EF 100%);
+            border-bottom: 2px solid #080301;
+        }
+
+            table.greenTable thead th {
+                font-size: 18px;
+                font-weight: normal;
+                color: #000000;
+                text-align: center;
+            }
+
+        table.greenTable tfoot .links {
+            text-align: right;
+        }
+
+            table.greenTable tfoot .links a {
+                display: inline-block;
+                background: #FFFFFF;
+                color: #24943A;
+                padding: 2px 8px;
+                border-radius: 5px;
+            }
+</style>
+
+
+<h2>Верни отговори </h2>
+<br />
+
+<table class="greenTable">
+    @foreach (var result in Model)
+    {
+        <thead>
+            <tr>
+                <th>  @result.question1</th>
+            </tr>
+        </thead>
+
+        if (result.Answer.TrueAnswer.true_ans_a == null || result.Answer.TrueAnswer.true_ans_a.IsEmpty()) { }
+        else
+        {
+            if (result.isSelected1 == true && result.Answer.answer_a == result.Answer.TrueAnswer.true_ans_a)
+            {
+                count++;
+                <tr>
+                    <td style="background-color: greenyellow">@result.Answer.TrueAnswer.true_ans_a</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td style="background-color: red">@result.Answer.TrueAnswer.true_ans_a</td>
+                </tr>
+            }
+
+        }
+
+        if (result.Answer.TrueAnswer.true_ans_b == null || result.Answer.TrueAnswer.true_ans_b.IsEmpty()) { }
+        else
+        {
+            if (result.isSelected2 == true && result.Answer.answer_b == result.Answer.TrueAnswer.true_ans_b)
+            {
+                count++;
+                <tr>
+                    <td style="background-color: greenyellow">@result.Answer.TrueAnswer.true_ans_b</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td style="background-color: red">@result.Answer.TrueAnswer.true_ans_b</td>
+                </tr>
+            }
+        }
+
+        if (result.Answer.TrueAnswer.true_ans_c == null || result.Answer.TrueAnswer.true_ans_c.IsEmpty()) { }
+        else
+        {
+            if (result.isSelected3 == true && result.Answer.answer_c == result.Answer.TrueAnswer.true_ans_c)
+            {
+                count++;
+                <tr>
+                    <td style="background-color: greenyellow">@result.Answer.TrueAnswer.true_ans_c</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td style="background-color: red">@result.Answer.TrueAnswer.true_ans_c</td>
+                </tr>
+            }
+        }
+        if (result.Answer.TrueAnswer.true_ans_d == null || result.Answer.TrueAnswer.true_ans_d.IsEmpty()) { }
+        else
+        {
+            if (result.isSelected4 == true && result.Answer.answer_d == result.Answer.TrueAnswer.true_ans_d)
+            {
+                count++;
+                <tr>
+                    <td style="background-color:greenyellow">@result.Answer.TrueAnswer.true_ans_d</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td style="background-color: red">@result.Answer.TrueAnswer.true_ans_d</td>
+                </tr>
+            }
+        }
+
+    }
+</table>
+<header class="header">
+    <h2>Твоят резултат е: @count</h2>
+    @if (count < 87)
+    {
+        <h4>Неуспешен опит!</h4>
+    }
+    else
+    {
+        <h4>Успешен опит!</h4>
+    }
+</header>
